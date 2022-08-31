@@ -99,7 +99,7 @@ public class App {
             int index = (int) Math.ceil(ls.size() / 2);
             return ls.get(index);
         } else {
-            int index1 = (int) Math.ceil(ls.size() / 2);
+            int index1 = (int) (ls.size() / 2) - 1;
             int index2 = index1 + 1;
 
             return (ls.get(index1) + ls.get(index2)) / 2;
