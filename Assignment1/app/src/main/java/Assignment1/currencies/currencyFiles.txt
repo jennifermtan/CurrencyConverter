@@ -1,0 +1,2 @@
+./src/main/java/Assignment1/currencies/AUD.csv
+./src/main/java/Assignment1/currencies/SGD.csv
