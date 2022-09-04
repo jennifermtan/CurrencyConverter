@@ -4,7 +4,8 @@ import java.io.FileNotFoundException;
 import java.sql.SQLOutput;
 import java.util.*;
 import java.lang.*;
-
+import java.math.BigDecimal;
+import java.math.MathContext;
 
 public class App {
     static Scanner scan = new Scanner(System.in);
@@ -21,7 +22,7 @@ public class App {
         }
     };
     public static void main(String[] args) {
-        App.readCurrencyFiles();
+        readCurrencyFiles();
         // Starting of the application
         System.out.println("Welcome to Currency Converter! Select displayed options to continue!\nWhat is your user type?\n1: User\n2: Admin");
         String user = scan.nextLine();
@@ -155,12 +156,62 @@ public class App {
         // Find the latest exchange rate of those currencies
         HashMap<String, Double> latestRates = new HashMap<>();
         for (LinkedHashMap<String, Double> currency: mostPop){
-            System.out.println(String.valueOf(currency.entrySet().toArray()[currency.size() -1]));
+            // get the latest exchange rate
+            String lastLine = String.valueOf(currency.entrySet().toArray()[currency.size() -1]);
+            Double exRate = Double.parseDouble(lastLine.split("=")[1]);
+
+            String currName = "";
+            // get its name
+            for (String name: currency.keySet()){
+                currName = name;
+                break;
+            }
+            latestRates.put(currName, exRate);
+
         }
-        // PROBLEM: CAN'T FIND WHICH CURRENCY BELONGS TO WHICH WITH THIS METHOD
 
+        // Print the first line of the table
+        System.out.println("___________________________________________________");
+        System.out.print("| From/to |");
+        for (String currName: latestRates.keySet()){
+            System.out.print("   " + currName + "   |");
+        }
+        System.out.println();
+        // Print the comparisons
+        for (HashMap.Entry<String,Double> currency: latestRates.entrySet()){
+            System.out.print("|   " + currency.getKey() + "   |");
+            for (HashMap.Entry<String,Double> otherCurrency: latestRates.entrySet()){
+                double epsilon = 0.000001d;
+                // If we're dealing with the same currency, then we just want to print a dash
+                if (Math.abs(currency.getValue() - otherCurrency.getValue()) < epsilon){
+                    System.out.print("    -    |");
+                }
+                else{
+                    double exRate = calcExchangeRate(currency.getValue(), otherCurrency.getValue());
+                    BigDecimal bd = new BigDecimal(exRate);
+                    bd = bd.round(new MathContext(6));
+                    double rounded = bd.doubleValue();
+                    String ex = Double.toString(rounded);
 
-        // TODO print the table
+                    // Change the number's length so that table format is preserved
+                    if (ex.length() > 7){
+                        while (ex.length() > 7){
+                            ex = ex.substring(0, ex.length() - 1);
+                        }
+                    }
+
+                    if (ex.length() < 7){
+                        while (ex.length() < 7){
+                            ex += "0";
+                        }
+                    }
+                    System.out.print(" " + ex + " |");
+                }
+
+            }
+            System.out.println();
+        }
+        System.out.println("___________________________________________________");
 
     }
 
