@@ -22,6 +22,7 @@ public class App {
         }
     };
     public static void main(String[] args) {
+        // reload data on app run
         readCurrencyFiles();
         // Starting of the application
         System.out.println("Welcome to Currency Converter! Select displayed options to continue!\nWhat is your user type?\n1: User\n2: Admin");
@@ -155,11 +156,15 @@ public class App {
 
         // Find the latest exchange rate of those currencies
         HashMap<String, Double> latestRates = new HashMap<>();
+        // AND the 2nd last rate
+        HashMap<String, Double> prevRates = new HashMap<>();
         for (LinkedHashMap<String, Double> currency: mostPop){
             // get the latest exchange rate
             String lastLine = String.valueOf(currency.entrySet().toArray()[currency.size() -1]);
             Double exRate = Double.parseDouble(lastLine.split("=")[1]);
 
+            String secondLastLine = String.valueOf(currency.entrySet().toArray()[currency.size() -2]);
+            Double prevRate = Double.parseDouble(secondLastLine.split("=")[1]);
             String currName = "";
             // get its name
             for (String name: currency.keySet()){
@@ -167,16 +172,19 @@ public class App {
                 break;
             }
             latestRates.put(currName, exRate);
+            prevRates.put(currName, prevRate);
+
 
         }
 
         // Print the first line of the table
-        System.out.println("___________________________________________________");
+        String entireLine = "___________________________________________________________________________";
+        System.out.println(entireLine);
         System.out.print("| From/to |");
         for (String currName: latestRates.keySet()){
-            System.out.print("   " + currName + "   |");
+            System.out.print("      " + currName + "      |");
         }
-        System.out.println();
+        System.out.println("\n" + entireLine);
         // Print the comparisons
         for (HashMap.Entry<String,Double> currency: latestRates.entrySet()){
             System.out.print("|   " + currency.getKey() + "   |");
@@ -184,10 +192,14 @@ public class App {
                 double epsilon = 0.000001d;
                 // If we're dealing with the same currency, then we just want to print a dash
                 if (Math.abs(currency.getValue() - otherCurrency.getValue()) < epsilon){
-                    System.out.print("    -    |");
+                    System.out.print("       -       |");
                 }
                 else{
+                    // calculate the current exchange rate and the previous exchange rate so you can compare them
                     double exRate = calcExchangeRate(currency.getValue(), otherCurrency.getValue());
+                    double prevExRate = calcExchangeRate(prevRates.get(currency.getKey()), prevRates.get(otherCurrency.getKey()));
+
+                    // round to 6s.f
                     BigDecimal bd = new BigDecimal(exRate);
                     bd = bd.round(new MathContext(6));
                     double rounded = bd.doubleValue();
@@ -205,13 +217,20 @@ public class App {
                             ex += "0";
                         }
                     }
-                    System.out.print(" " + ex + " |");
+
+                    if (prevExRate > exRate){
+                        System.out.print("  " + ex + " (D)  |");
+                    }
+                    if (prevExRate < exRate){
+                        System.out.print("  " + ex + " (I)  |");
+                    }
+
                 }
 
             }
-            System.out.println();
+            System.out.println("\n"+ entireLine);
         }
-        System.out.println("___________________________________________________");
+
 
     }
 
@@ -253,3 +272,6 @@ public class App {
 
 
 }
+
+//String upArrow = "\u2191";
+//String downArrow = "\u2193";
