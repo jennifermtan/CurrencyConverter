@@ -25,9 +25,7 @@ public class App {
         // reload data on app run
         readCurrencyFiles();
         // Starting of the application
-        System.out.println("Welcome to Currency Converter! Select displayed options to continue!\nWhat is your user type?\n1: User\n2: Admin");
-        String user = scan.nextLine();
-
+        String user = getString(Arrays.asList("1", "2"), "Welcome to Currency Converter! Select displayed options to continue!\nWhat is your user type?\n1: User\n2: Admin");
         selectUserOption(user);
 
     }
@@ -64,8 +62,8 @@ public class App {
     public static void selectUserOption(String userType) {
         if(userType.equals("1")) {
             // run code for user
-            System.out.println("User, what would you like to do?\n1: Convert currencies\n2: Display currency table\n3: Summary of 2 currencies");
-            String input = scan.nextLine();
+            String input = getString(Arrays.asList("1", "2", "3"), "User, what would you like to do?\n1: Convert currencies\n2: Display currency table\n3: Summary of 2 currencies");
+
             switch (input) {
                 case "1":
                     // Convert currencies
@@ -80,9 +78,9 @@ public class App {
         }
         else if(userType.equals("2")) {
             // run code for admin
-            System.out.println("Administrator, what would you like to do?\n1: Convert currencies\n2: Display currency table\n" +
+            String input = getString(Arrays.asList("1", "2", "3", "4"), "Administrator, what would you like to do?\n1: Convert currencies\n2: Display currency table\n" +
                     "3: Summary of 2 currencies\n4: ");
-            String input = scan.nextLine();
+
             switch (input) {
                 case "1":
                     // Convert currencies
@@ -110,9 +108,14 @@ public class App {
             for (String curr: popCurrencies){
                 System.out.println(curr);
             }
-            System.out.println("Would you like to modify these? (Y/N)");
-            answer = scan.nextLine();
-            if (answer.equals("Y")){
+            ArrayList<String> yesOrNo = new ArrayList<String>();
+            yesOrNo.add("Y");
+            yesOrNo.add("y");
+            yesOrNo.add("N");
+            yesOrNo.add("n");
+            answer = getString(yesOrNo, "Would you like to modify these popular currencies? (Y/N)");
+
+            if (answer.equals("Y") || answer.equals("y")){
                 String toRemove = getString(popCurrencies, "Which currency would you like to remove?");
                 popCurrencies.remove(toRemove);
 
@@ -193,38 +196,37 @@ public class App {
                 // If we're dealing with the same currency, then we just want to print a dash
                 if (Math.abs(currency.getValue() - otherCurrency.getValue()) < epsilon){
                     System.out.print("       -       |");
+                    continue;
                 }
-                else{
-                    // calculate the current exchange rate and the previous exchange rate so you can compare them
-                    double exRate = calcExchangeRate(currency.getValue(), otherCurrency.getValue());
-                    double prevExRate = calcExchangeRate(prevRates.get(currency.getKey()), prevRates.get(otherCurrency.getKey()));
 
-                    // round to 6s.f
-                    BigDecimal bd = new BigDecimal(exRate);
-                    bd = bd.round(new MathContext(6));
-                    double rounded = bd.doubleValue();
-                    String ex = Double.toString(rounded);
+                // calculate the current exchange rate and the previous exchange rate so you can compare them
+                double exRate = calcExchangeRate(currency.getValue(), otherCurrency.getValue());
+                double prevExRate = calcExchangeRate(prevRates.get(currency.getKey()), prevRates.get(otherCurrency.getKey()));
 
-                    // Change the number's length so that table format is preserved
-                    if (ex.length() > 7){
-                        while (ex.length() > 7){
-                            ex = ex.substring(0, ex.length() - 1);
-                        }
+                // round to 6s.f
+                BigDecimal bd = new BigDecimal(exRate);
+                bd = bd.round(new MathContext(6));
+                double rounded = bd.doubleValue();
+                String ex = Double.toString(rounded);
+
+                // Change the number's length so that table format is preserved
+                if (ex.length() > 7){
+                    while (ex.length() > 7){
+                        ex = ex.substring(0, ex.length() - 1);
                     }
+                }
 
-                    if (ex.length() < 7){
-                        while (ex.length() < 7){
-                            ex += "0";
-                        }
+                if (ex.length() < 7){
+                    while (ex.length() < 7){
+                        ex += "0";
                     }
+                }
 
-                    if (prevExRate > exRate){
-                        System.out.print("  " + ex + " (D)  |");
-                    }
-                    if (prevExRate < exRate){
-                        System.out.print("  " + ex + " (I)  |");
-                    }
-
+                if (prevExRate > exRate){
+                    System.out.print("  " + ex + " (D)  |");
+                }
+                if (prevExRate < exRate){
+                    System.out.print("  " + ex + " (I)  |");
                 }
 
             }
