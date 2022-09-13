@@ -10,9 +10,9 @@ public class AppLogic{
     private static Scanner scan = new Scanner(System.in);
     // A list of all the currencies in the program
     // Each currency is saved as a LinkedHashMap to maintain order of exchange rates
-    static List<LinkedHashMap<String, Double>> currencies = new ArrayList<LinkedHashMap<String, Double>>();
+    private static List<LinkedHashMap<String, Double>> currencies = new ArrayList<LinkedHashMap<String, Double>>();
     // A list of the popular currencies. Can be updated by admin
-    static List<String> popCurrencies = new ArrayList<String>(){
+    private static List<String> popCurrencies = new ArrayList<String>(){
         {
             add("USD");
             add("AUD");
