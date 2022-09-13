@@ -1,6 +1,5 @@
 package Assignment1;
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.sql.SQLOutput;
 import java.util.*;
 import java.lang.*;
@@ -8,12 +7,12 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 
 public class AppLogic{
-    static Scanner scan = new Scanner(System.in);
+    private static Scanner scan = new Scanner(System.in);
     // A list of all the currencies in the program
-    // Each currency is saves as a LinkedHashMap to maintain order of exchange rates
-    private static List<LinkedHashMap<String, Double>> currencies = new ArrayList<>();
+    // Each currency is saved as a LinkedHashMap to maintain order of exchange rates
+    static List<LinkedHashMap<String, Double>> currencies = new ArrayList<LinkedHashMap<String, Double>>();
     // A list of the popular currencies. Can be updated by admin
-    private static List<String> popCurrencies = new ArrayList<>(){
+    static List<String> popCurrencies = new ArrayList<String>(){
         {
             add("USD");
             add("AUD");
@@ -21,6 +20,42 @@ public class AppLogic{
             add("EUR");
         }
     };
+
+    // Initial choices for admin and users
+    public static void selectUserOption(String userType, Scanner scan) {
+        if (userType.equals("1")) {
+            // run code for user
+            String input = UserInterface.getString(Arrays.asList("1", "2", "3"), "User, what would you like to do?\n1: Convert currencies\n2: Display currency table\n3: Summary of 2 currencies", scan);
+
+            switch (input) {
+                case "1":
+                    // Convert currencies
+                    break;
+                case "2":
+                    AppLogic.displayCurrencyTable();
+                    break;
+                case "3":
+                    // Summary of two currencies
+                    break;
+            }
+        } else if (userType.equals("2")) {
+            // run code for admin
+            String input = UserInterface.getString(Arrays.asList("1", "2", "3", "4"), "Administrator, what would you like to do?\n1: Convert currencies\n2: Display currency table\n" +
+                    "3: Summary of 2 currencies\n4: ", scan);
+
+            switch (input) {
+                case "1":
+                    // Convert currencies
+                    break;
+                case "2":
+                    UserInterface.adminDisplayTable(scan, popCurrencies, currencies);
+                    break;
+                case "3":
+                    // Summary of two currencies
+                    break;
+            }
+        }
+    }
 
     // Repeatable method, always run at beginning of program, which reads into the currency folder
     // and adds those files into the currency list attribute.
@@ -51,93 +86,8 @@ public class AppLogic{
         }
     }
 
-    public static void selectUserOption(String userType) {
-        if(userType.equals("1")) {
-            // run code for user
-            String input = getString(Arrays.asList("1", "2", "3"), "User, what would you like to do?\n1: Convert currencies\n2: Display currency table\n3: Summary of 2 currencies");
+    public static void printOptions() {}
 
-            switch (input) {
-                case "1":
-                    // Convert currencies
-                    break;
-                case "2":
-                    displayCurrencyTable();
-                    break;
-                case "3":
-                    // Summary of two currencies
-                    break;
-            }
-        }
-        else if(userType.equals("2")) {
-            // run code for admin
-            String input = getString(Arrays.asList("1", "2", "3", "4"), "Administrator, what would you like to do?\n1: Convert currencies\n2: Display currency table\n" +
-                    "3: Summary of 2 currencies\n4: ");
-
-            switch (input) {
-                case "1":
-                    // Convert currencies
-                    break;
-                case "2":
-                    adminDisplayTable();
-                    break;
-                case "3":
-                    // Summary of two currencies
-                    break;
-            }
-        }
-    }
-
-    public static void printOptions() {
-        ;
-    }
-
-    public static void adminDisplayTable(){
-        System.out.println("We would like to display the table with the most popular currencies.");
-        String answer = "";
-        // allow the admin to keep switching out currencies if they want
-        do{
-            System.out.println("These are the popular currencies we have saved on file: ");
-            for (String curr: popCurrencies){
-                System.out.println(curr);
-            }
-            ArrayList<String> yesOrNo = new ArrayList<String>();
-            yesOrNo.add("Y");
-            yesOrNo.add("y");
-            yesOrNo.add("N");
-            yesOrNo.add("n");
-            answer = getString(yesOrNo, "Would you like to modify these popular currencies? (Y/N)");
-
-            if (answer.equals("Y") || answer.equals("y")){
-                String toRemove = getString(popCurrencies, "Which currency would you like to remove?");
-                popCurrencies.remove(toRemove);
-
-                // The only currencies the admin can add are ones that aren't already popular currencies
-                // and haven't just been chosen for removal
-                ArrayList<String> allCurrencyNames = getAllCurrencies();
-                ArrayList<String> possibleCurrencyNames = new ArrayList<String>();
-
-                // copy allCurrencyNames into possibleCurrencyNames
-                for (String elem: allCurrencyNames){
-                    possibleCurrencyNames.add(elem);
-                }
-
-                for (String name: allCurrencyNames){
-                    if (name.equals(toRemove)){
-                        possibleCurrencyNames.remove(name);
-                    }
-                    for (String curr: popCurrencies){
-                        if (curr.equals(name)){
-                            possibleCurrencyNames.remove(name);
-                        }
-                    }
-                }
-                String toReplace = getString(possibleCurrencyNames, "Which currency would you like to replace it with?");
-                popCurrencies.add(toReplace);
-            }
-        } while(answer.equals("Y"));
-
-        displayCurrencyTable();
-    }
     public static void displayCurrencyTable(){
         // Find the most popular currency hashmaps according to the popular currencies set by admin
         List<LinkedHashMap<String, Double>> mostPop = new ArrayList<>();
@@ -247,20 +197,8 @@ public class AppLogic{
         return toUSDCurrencyA / toUsdCurrencyB;
     }
 
-    // Method for getting a response from a user which loops when given an incorrect response
-    static String getString(List<String> acceptableResponses, String prompt) {
-        Scanner s = new Scanner(System.in);
-
-        String response;
-        do {
-            System.out.println(prompt);
-            response = s.nextLine();
-
-            if (!acceptableResponses.contains(response)) {
-                System.out.println("We apologise. That response is not computable. Please try again.");
-            }
-        } while (!acceptableResponses.contains(response));
-
-        return response;
+    public static List<LinkedHashMap<String, Double>> getCurrencies(){
+        return currencies;
     }
+
 }
