@@ -12,7 +12,7 @@ class LogicTest{
     public void currencyListCheck() throws Exception{
         assertNotNull(new AppLogic());
         AppLogic.readCurrencyFiles();
-        assertEquals(AppLogic.getCurrencies().size(), 6);
+        assertEquals(AppLogic.getCurrenciesHashMaps().size(), 6);
         ArrayList<String> allCurrencies = new ArrayList<String>();
         allCurrencies.add("AUD");
         allCurrencies.add("SGD");
@@ -30,7 +30,7 @@ class LogicTest{
         String input = "y\n" + "SGD\n" + "JPY\n" + "Y\n" + "EUR\n" + "ILS\n" + "n\n";
         Scanner scan = new Scanner(input);
 
-        UserInterface.adminDisplayTable(scan, AppLogic.popCurrencies, AppLogic.currencies);
+        UserInterface.adminDisplayTable(scan, AppLogic.getPopCurrencies(), AppLogic.getCurrenciesHashMaps());
 
         ArrayList<String> popCurrencies = new ArrayList<String>();
         popCurrencies.add("USD");
@@ -38,7 +38,7 @@ class LogicTest{
         popCurrencies.add("JPY");
         popCurrencies.add("ILS");
 
-        assertEquals(AppLogic.popCurrencies, popCurrencies);
+        assertEquals(AppLogic.getPopCurrencies(), popCurrencies);
     }
 
     @Test
