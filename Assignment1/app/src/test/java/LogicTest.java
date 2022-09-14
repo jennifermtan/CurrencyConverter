@@ -24,6 +24,7 @@ class LogicTest{
         assertEquals(AppLogic.getAllCurrencies(), allCurrencies);
     }
 
+    // Tests "adminDisplayTable" method in UserInterface
     @Test
     public void allowsAdminToChangeTable(){
         String input = "y\n" + "SGD\n" + "JPY\n" + "Y\n" + "EUR\n" + "ILS\n" + "n\n";
