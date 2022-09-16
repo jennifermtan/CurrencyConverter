@@ -3,6 +3,7 @@ import java.util.*;
 import java.io.*;
 
 public class App {
+
     public static void main(String[] args) {
         // Reload data on app run
         AppLogic.readCurrencyFiles();
@@ -12,4 +13,6 @@ public class App {
         AppLogic.selectUserOption(user, new Scanner(System.in));
 
     }
+
+
 }
