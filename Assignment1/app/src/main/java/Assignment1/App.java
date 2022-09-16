@@ -21,6 +21,7 @@ public class App {
             add("EUR");
         }
     };
+
     public static void main(String[] args) {
         // reload data on app run
         readCurrencyFiles();
@@ -79,7 +80,7 @@ public class App {
         else if(userType.equals("2")) {
             // run code for admin
             String input = getString(Arrays.asList("1", "2", "3", "4"), "Administrator, what would you like to do?\n1: Convert currencies\n2: Display currency table\n" +
-                    "3: Summary of 2 currencies\n4: ");
+                           "3: Summary of 2 currencies\n4: Add new currencies\n5: Update exchange rates");
 
             switch (input) {
                 case "1":
@@ -146,6 +147,7 @@ public class App {
 
         displayCurrencyTable();
     }
+
     public static void displayCurrencyTable(){
         // Find the most popular currency hashmaps according to the popular currencies set by admin
         List<LinkedHashMap<String, Double>> mostPop = new ArrayList<>();
