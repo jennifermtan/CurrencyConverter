@@ -45,7 +45,7 @@ class LogicTest{
     public void testInitialChoices(){
         // USER tests
         // choose to convert currencies as a normal user
-        AppLogic.selectUserOption("1", new Scanner("1")); // what should I check here?
+        // AppLogic.selectUserOption("1", new Scanner("1")); // what should I check here?
 
         // choose to display the currency table as a normal user
         AppLogic.selectUserOption("1", new Scanner("2")); // only output is to terminal
@@ -55,7 +55,7 @@ class LogicTest{
 
         // ADMIN tests
         // choose to convert currencies as an admin
-        AppLogic.selectUserOption("2", new Scanner("1")); // what should I check here?
+        // AppLogic.selectUserOption("2", new Scanner("1")); // what should I check here?
 
         // choose to display the currency table as a normal user
         AppLogic.selectUserOption("2", new Scanner("2\n" + "n\n")); // admin pop currencies manipulation is already tested so only output is to terminal
