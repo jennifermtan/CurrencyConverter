@@ -1,5 +1,24 @@
 # Ignore Gradle project-specific cache directory
 .gradle
 
+# Ignore intellij files
+CC_04_Wed_16_Frank_Group-5_Assignment1.iml
+misc.xml
+modules.xml
+vcs.xml
+
+## .idea/.gitignore
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+
+# Ignore files produced during build
+app/bin/
+
 # Ignore Gradle build output directory
 build

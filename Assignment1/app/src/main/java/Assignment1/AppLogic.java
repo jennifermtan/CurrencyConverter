@@ -29,13 +29,13 @@ public class AppLogic{
 
             switch (input) {
                 case "1":
-                    convertCurrencies();
+                    convertCurrencies(scan);
                     break;
                 case "2":
                     AppLogic.displayCurrencyTable();
                     break;
                 case "3":
-                    AppLogic.summaryOf2Currencies();
+                    AppLogic.summaryOf2Currencies(scan);
                     break;
             }
         } else if (userType.equals("2")) {
@@ -45,13 +45,13 @@ public class AppLogic{
 
             switch (input) {
                 case "1":
-                    convertCurrencies();
+                    convertCurrencies(scan);
                     break;
                 case "2":
                     UserInterface.adminDisplayTable(scan, popCurrencies, currencies);
                     break;
                 case "3":
-                    AppLogic.summaryOf2Currencies();
+                    AppLogic.summaryOf2Currencies(scan);
                     break;
             }
         }
@@ -85,7 +85,7 @@ public class AppLogic{
             System.out.println("File not found exception.");
         }
     }
-    public static void convertCurrencies() {
+    public static void convertCurrencies(Scanner scan) {
         System.out.println("Please input the amount.");
         double amount = Double.parseDouble(scan.nextLine());
         String currency1 = UserInterface.getString(getAllCurrencies(), "Please choose the current currency symbol.", scan);
@@ -217,7 +217,7 @@ public class AppLogic{
     }
 
     // Displays the summary 2 currencies chosen by input
-    public static void summaryOf2Currencies() {
+    public static void summaryOf2Currencies(Scanner scan) {
         System.out.println("Please choose 2 currencies so we can compare them against each other.");
         System.out.println("Here is a list of all the saved currencies.");
         List<String> acceptableCurrencies = new ArrayList<String>();
