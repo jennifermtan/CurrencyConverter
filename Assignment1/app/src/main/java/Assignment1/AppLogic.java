@@ -51,7 +51,7 @@ public class AppLogic{
                     UserInterface.adminDisplayTable(scan, popCurrencies, currencies);
                     break;
                 case "3":
-                    // Summary of two currencies
+                    AppLogic.summaryOf2Currencies();
                     break;
             }
         }
