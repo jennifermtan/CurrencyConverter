@@ -41,6 +41,12 @@ class LogicTest{
         assertEquals(AppLogic.getPopCurrencies(), popCurrencies);
     }
 
+    // Tests "summaryOf2Currencies" method in AppLogic
+    @Test
+    public void checkSummaryOfCurrencies() {
+        String input = "JPY\n" + "EUR\n" + "10/08/22\n" + "12/08/22\n";
+        AppLogic.summaryOf2Currencies(new Scanner(input));
+    }
     @Test
     public void testInitialChoices(){
         // USER tests
