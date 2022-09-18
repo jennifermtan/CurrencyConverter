@@ -392,7 +392,7 @@ public class AppLogic{
             }
         }
         else
-            System.out.println("Currency does not exist");
+            System.out.println("Currency does not exist.");
     }
 
     // Returns the Names of all our currencies
