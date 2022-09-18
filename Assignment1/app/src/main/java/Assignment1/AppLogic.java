@@ -35,7 +35,7 @@ public class AppLogic{
                     AppLogic.displayCurrencyTable();
                     break;
                 case "3":
-                    // Summary of two currencies
+                    AppLogic.summaryOf2Currencies();
                     break;
             }
         } else if (userType.equals("2")) {
@@ -176,6 +176,105 @@ public class AppLogic{
         }
 
 
+    }
+
+    // Displays the summary 2 currencies chosen by input
+    public static void summaryOf2Currencies() {
+        System.out.println("Here is a list of saved currencies.");
+        List<String> acceptableCurrencies = new ArrayList<String>();
+        List<String> acceptableDates = new ArrayList<String>();
+        // Saving the acceptable currencies and dates for the user to input
+        for (LinkedHashMap<String, Double> currency : currencies) {
+            for (String text : currency.keySet()) {
+                if (text.indexOf('/') == -1) {
+                    acceptableCurrencies.add(text);
+                    System.out.println(text);
+                }
+                else {
+                    if (!acceptableDates.contains(text)) {
+                        acceptableDates.add(text);
+                    }
+                }
+            }
+        }
+        // Asking input from the user for the currencies and dates
+        String firstCurrency = UserInterface.getString(acceptableCurrencies, "Please input the first currency in the 3-lettered format as shown above.", scan);
+        acceptableCurrencies.remove(String.valueOf(firstCurrency));
+        String secondCurrency = UserInterface.getString(acceptableCurrencies, "Please input the second currency.", scan);
+        System.out.println("Here is a list of saved dates for each currency's conversation rates.");
+        for (String date : acceptableDates) {
+            System.out.println(date);
+        }
+        String startDate = UserInterface.getString(acceptableDates, "Please input the start date in the format DD/MM/YY as shown above.", scan);
+        while (acceptableDates.contains(startDate)) {
+            acceptableDates.remove(0);
+        }
+        String endDate = UserInterface.getString(acceptableDates, "Please input the end date.", scan);
+        System.out.println("Here is a summary of the 2 currencies.\n");
+        // Indexing the currencies for them to be accessed in the 'currencies' list
+        int firstCurrencyIndex = 0;
+        int secondCurrencyIndex = 0;
+        for (int i = 0; i < acceptableCurrencies.size(); i++) {
+            if (acceptableCurrencies.get(i).equals(firstCurrency)) {
+                firstCurrencyIndex = i;
+            }
+            if (acceptableCurrencies.get(i).equals(secondCurrency)) {
+                secondCurrencyIndex = i;
+            }
+        }
+        // Reading and displaying the summary for the currencies
+        LinkedHashMap<String, Double> currency;
+        ArrayList<Double> firstRates = new ArrayList<Double>();
+        ArrayList<Double> secondRates = new ArrayList<Double>();
+        boolean printDates = false;
+        for (int i = 0; i < currencies.size(); i++) {
+            if (i == firstCurrencyIndex) {
+                System.out.println(firstCurrency + " Conversion Rates");
+                currency = currencies.get(i);
+                printDates = false;
+                for (String date : currency.keySet()) {
+                    if (date.equals(startDate)) {
+                        printDates = true;
+                    }
+                    else if (date.equals(endDate)) {
+                        printDates = false;
+                        System.out.println(date + ": " + currency.get(date).toString());
+                    }
+                    if (printDates) {
+                        System.out.println(date + ": " + currency.get(date).toString());
+                        firstRates.add(currency.get(date));
+                    }
+                }
+                System.out.println("\nAverage: " + Operations.getAverage(firstRates) +
+                                   "\nMedian: " + Operations.getMedian(firstRates) +
+                                   "\nMaximum: " + Operations.getMaximum(firstRates) +
+                                   "\nMinimum: " + Operations.getMinimum(firstRates) +
+                                   "\nStandard Deviation: " + Operations.getSD(firstRates) + "\n");
+            }
+            if (i == secondCurrencyIndex) {
+                System.out.println(secondCurrency + " Conversion Rates");
+                currency = currencies.get(i);
+                printDates = false;
+                for (String date : currency.keySet()) {
+                    if (date.equals(startDate)) {
+                        printDates = true;
+                    }
+                    else if (date.equals(endDate)) {
+                        printDates = false;
+                        System.out.println(date + ": " + currency.get(date).toString());
+                    }
+                    if (printDates) {
+                        System.out.println(date + ": " + currency.get(date).toString());
+                        secondRates.add(currency.get(date));
+                    }
+                }
+                System.out.println("\nAverage: " + Operations.getAverage(secondRates) +
+                                   "\nMedian: " + Operations.getMedian(secondRates) +
+                                   "\nMaximum: " + Operations.getMaximum(secondRates) +
+                                   "\nMinimum: " + Operations.getMinimum(secondRates) +
+                                   "\nStandard Deviation: " + Operations.getSD(secondRates));
+            }
+        }
     }
 
     // Returns the Names of all our currencies
