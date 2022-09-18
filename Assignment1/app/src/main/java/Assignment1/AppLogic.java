@@ -29,7 +29,7 @@ public class AppLogic{
 
             switch (input) {
                 case "1":
-                    // Convert currencies
+                    convertCurrencies();
                     break;
                 case "2":
                     AppLogic.displayCurrencyTable();
@@ -45,7 +45,7 @@ public class AppLogic{
 
             switch (input) {
                 case "1":
-                    // Convert currencies
+                    convertCurrencies();
                     break;
                 case "2":
                     UserInterface.adminDisplayTable(scan, popCurrencies, currencies);
@@ -85,8 +85,46 @@ public class AppLogic{
             System.out.println("File not found exception.");
         }
     }
+    public static void convertCurrencies() {
+        System.out.println("Please input the amount.");
+        double amount = Double.parseDouble(scan.nextLine());
+        String currency1 = UserInterface.getString(getAllCurrencies(), "Please choose the current currency symbol.", scan);
+        String currency2 = UserInterface.getString(getAllCurrencies(), "Please choose the currency symbol you want to convert it to.", scan);
+        //Find the exchange rate in the hashmap
+        double currentRate = 0;
+        double convertedRate = 0;
+        LinkedHashMap<String, Double> currentCurrency = getCurrency(currency1);
+        LinkedHashMap<String, Double> convertedCurrency = getCurrency(currency2);
 
-    public static void printOptions() {}
+        for (String key : currentCurrency.keySet()) {
+            if (key.equals(currency1)) {
+                String currentKey = (String) currentCurrency.keySet().toArray()[currentCurrency.size() - 1]; //Put the keys in an array to get the last element
+                currentRate = currentCurrency.get(currentKey);
+
+            }
+        }
+        for (String key : convertedCurrency.keySet()) {
+            if (key.equals(currency2)) {
+                String currentKey = (String) convertedCurrency.keySet().toArray()[convertedCurrency.size() - 1];
+                convertedRate = convertedCurrency.get(currentKey);
+            }
+        }
+        double rate = calcExchangeRate(convertedRate, currentRate);
+        double convertedAmount = amount * rate;
+        System.out.printf("The converted currency is %s %g", currency2, convertedAmount); //Format to 6 significant figures
+        System.out.println();
+    }
+    // Returns linked hashmap of a specified currency
+    public static LinkedHashMap<String, Double> getCurrency(String symbol) {
+        for (LinkedHashMap<String, Double> currency : currencies) {
+            for (String key : currency.keySet()) {
+                if (key.equals(symbol)) {
+                    return currency;
+                }
+            }
+        }
+        return null;
+    }
 
     public static void displayCurrencyTable(){
         // Find the most popular currency hashmaps according to the popular currencies set by admin
