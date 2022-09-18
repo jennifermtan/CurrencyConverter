@@ -180,7 +180,8 @@ public class AppLogic{
 
     // Displays the summary 2 currencies chosen by input
     public static void summaryOf2Currencies() {
-        System.out.println("Here is a list of saved currencies.");
+        System.out.println("Please choose 2 currencies so we can compare them against each other.");
+        System.out.println("Here is a list of all the saved currencies.");
         List<String> acceptableCurrencies = new ArrayList<String>();
         List<String> acceptableDates = new ArrayList<String>();
         // Saving the acceptable currencies and dates for the user to input
