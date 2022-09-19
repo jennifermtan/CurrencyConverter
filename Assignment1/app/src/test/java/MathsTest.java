@@ -3,7 +3,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.*;
 
-class OperationsTest {
+class MathsTest {
     // The arrayList of the numbers we're using to test the formula methods
     private ArrayList<Double> testNums = new ArrayList<Double>(Arrays.asList(4.35, 3.1415, 1.16457, 42.89, 5.0, 6.73));
 
