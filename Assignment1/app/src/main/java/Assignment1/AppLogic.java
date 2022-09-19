@@ -25,7 +25,8 @@ public class AppLogic{
     public static void selectUserOption(String userType, Scanner scan) {
         if (userType.equals("1")) {
             // run code for user
-            String input = UserInterface.getString(Arrays.asList("1", "2", "3"), "User, what would you like to do?\n1: Convert currencies\n2: Display currency table\n3: Summary of 2 currencies", scan);
+            String input = UserInterface.getString(Arrays.asList("1", "2", "3", "4"), "User, what would you like to do?\n1: Convert currencies\n" +
+                    "2: Display currency table\n3: Summary of 2 currencies\n4: Exit the program", scan);
 
             switch (input) {
                 case "1":
@@ -37,11 +38,15 @@ public class AppLogic{
                 case "3":
                     AppLogic.summaryOf2Currencies(scan);
                     break;
+                case "4":
+                    System.out.println("Thank you for using our Currency Converter, have a good day :)");
+                    System.exit(0);
             }
         } else if (userType.equals("2")) {
             // run code for admin
-            String input = UserInterface.getString(Arrays.asList("1", "2", "3", "4"), "Administrator, what would you like to do?\n1: Convert currencies\n2: Display currency table\n" +
-                    "3: Summary of 2 currencies\n4: ", scan);
+            String input = UserInterface.getString(Arrays.asList("1", "2", "3", "4", "5", "6"), "Administrator, what would you like to do?\n" +
+                    "1: Convert currencies\n2: Display currency table\n3: Summary of 2 currencies\n4: Add new currency\n" +
+                    "5: Add new exchange rate for existing currency\n6: Exit the program", scan);
 
             switch (input) {
                 case "1":
@@ -53,8 +58,18 @@ public class AppLogic{
                 case "3":
                     AppLogic.summaryOf2Currencies(scan);
                     break;
+                case "4":
+                    addNewCurrency(scan);
+                    break;
+                case "5":
+                    addExchangeRate(scan);
+                    break;
+                case "6":
+                    System.out.println("Thank you for using our Currency Converter, have a good day :)");
+                    System.exit(0);
             }
         }
+        selectUserOption(userType, scan);
     }
 
     // Repeatable method, always run at beginning of program, which reads into the currency folder
@@ -313,6 +328,70 @@ public class AppLogic{
         System.out.printf("\nMaximum: %g", Operations.getMaximum(secondToFirstRates));
         System.out.printf("\nMinimum: %g", Operations.getMinimum(secondToFirstRates));
         System.out.printf("\nStandard Deviation: %g\n\n", Operations.getSD(secondToFirstRates));
+    }
+
+    // Creates a new currency file if there isn't one already
+    public static void addNewCurrency(Scanner scan) {
+        System.out.println("Please input name of the currency you want to add.");
+        String name = scan.nextLine();
+        if(!getAllCurrencies().contains(name)) {
+            File newFile = new File("./src/main/java/Assignment1/currencies/" + name + ".csv");
+            File currencyFile = new File("./src/main/java/Assignment1/currencies/currencyFiles.txt");
+
+            try {
+                // Creating the new file for the currency
+                FileWriter fr1 = new FileWriter(newFile, false);
+                fr1.write(name + ", 0.0");
+                // Adding the filepath to currencyFile
+                FileWriter fr2 = new FileWriter(currencyFile, true);
+                fr2.write(System.lineSeparator() + "./src/main/java/Assignment1/currencies/" + name + ".csv");
+
+                System.out.println(name + " was successfully added to the system.\n");
+                fr1.close();
+                fr2.close();
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+            }
+        }
+        else
+            System.out.println("Error: that currency already exists in the system.");
+    }
+
+    public static void addExchangeRate(Scanner scan) {
+        System.out.println("Please input currency name.");
+        String name = scan.nextLine();
+        if(getAllCurrencies().contains(name)) {
+            System.out.println("Please input date in DD/MM/YY format.");
+            String date = scan.nextLine();
+            System.out.println("Please input the exchange rate in USD, rounded off to 5 decimal places.");
+            String rate = scan.nextLine();
+            try {
+                Scanner currencyFiles = new Scanner(new File("./src/main/java/Assignment1/currencies/currencyFiles.txt"));
+                while(currencyFiles.hasNextLine()) {
+                    String line = currencyFiles.nextLine();
+                    if(line.contains(name)) {
+                        try {
+                            FileWriter fr = new FileWriter(line, true);
+                            fr.write(System.lineSeparator() + date + ", " + rate);
+                            System.out.println("The new exchange rate for " + name + " was successfully added.\n");
+                            fr.close();
+                        } catch (IOException e) {
+                            System.out.println("An error occurred.");
+                        } finally {
+                            for(LinkedHashMap<String, Double> currency: currencies) {
+                                if(currency.keySet().contains(name))
+                                    currency.put(date, Double.parseDouble(rate));
+                            }
+                        }
+                    }
+                }
+                currencyFiles.close();
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+            }
+        }
+        else
+            System.out.println("Currency does not exist.");
     }
 
     // Returns the Names of all our currencies
