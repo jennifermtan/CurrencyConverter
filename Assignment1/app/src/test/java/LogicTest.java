@@ -80,11 +80,11 @@ class LogicTest{
     }
 
     // Tests "addNewCurrency" method in AppLogic
-    @Test
-    public void addNewCurrency() throws Exception {
-        // outputStreamCaptor.toString().trim()
-        AppLogic.addNewCurrency(new Scanner("AUD\n" + "6\n"));
-        assertEquals("Please input name of the currency you want to add.\nError: that currency already exists in the system.\n", outputStreamCaptor.toString());
+//    @Test
+//    public void addNewCurrency() throws Exception {
+//        // outputStreamCaptor.toString().trim()
+//        AppLogic.addNewCurrency(new Scanner("AUD\n" + "6\n"));
+//        assertEquals("Please input name of the currency you want to add.\nError: that currency already exists in the system.\n", outputStreamCaptor.toString());
 
 //        // Deleting the test file created by method
 //        File testFile = new File("./src/main/java/Assignment1/currencies/TEST.csv");
@@ -111,12 +111,12 @@ class LogicTest{
 //        boolean successful = tempFile.renameTo(new File("./src/main/java/Assignment1/currencies/currencyFiles.txt"));
 //
 //        assertTrue(successful);
-    }
+//    }
 
-    @Test
-    public void addExchangeRate() throws Exception{
-        AppLogic.addExchangeRate(new Scanner("test\n" + "6\n"));
-        assertEquals("Please input currency name.\nCurrency does not exist.", outputStreamCaptor.toString());
+//    @Test
+//    public void addExchangeRate() throws Exception{
+//        AppLogic.addExchangeRate(new Scanner("test\n" + "6\n"));
+//        assertEquals("Please input currency name.\nCurrency does not exist.", outputStreamCaptor.toString());
 
 //        // "Deleting" the added line from currencyList.txt
 //        File inputFile = new File("./src/main/java/Assignment1/currencies/AUD.csv");
@@ -138,7 +138,7 @@ class LogicTest{
 //        inputFile.delete();
 //        boolean successful = tempFile.renameTo(new File("./src/main/java/Assignment1/currencies/AUD.csv"));
 //        assertTrue(successful);
-    }
+//    }
 
     @Test
     public void selectUserOption() {
