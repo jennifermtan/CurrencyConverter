@@ -116,7 +116,7 @@ class LogicTest{
     @Test
     public void addExchangeRate() throws Exception{
         AppLogic.addExchangeRate(new Scanner("test\n" + "6\n"));
-        assertEquals("Please input currency name.\nCurrency already exists.", outputStreamCaptor.toString());
+        assertEquals("Please input currency name.\nCurrency does not exist.", outputStreamCaptor.toString());
 
 //        // "Deleting" the added line from currencyList.txt
 //        File inputFile = new File("./src/main/java/Assignment1/currencies/AUD.csv");
