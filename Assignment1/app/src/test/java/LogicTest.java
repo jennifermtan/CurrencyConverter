@@ -72,6 +72,14 @@ class LogicTest{
         assertEquals(AppLogic.getPopCurrencies(), popCurrencies);
     }
 
+
+    // Testing functionality of convertCurrencies method
+    @Test
+    public void checkConvertCurrencies() {
+        String input = "200\n" + "AUD\n" + "SGD\n";
+        AppLogic.convertCurrencies(new Scanner(input));
+    }
+
     // Tests "summaryOf2Currencies" method in AppLogic
     @Test
     public void checkSummaryOfCurrencies() {
