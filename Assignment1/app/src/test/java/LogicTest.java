@@ -143,6 +143,8 @@ class LogicTest{
     @Test
     public void selectUserOption() {
         AppLogic.selectUserOption("1", new Scanner("2\n" + "4\n")); // only output is to terminal
+        AppLogic.selectUserOption("1", new Scanner("3\n" + "4\n")); // only output is to terminal
+        AppLogic.selectUserOption("1", new Scanner("4\n")); // only output is to terminal
     }
 
 
