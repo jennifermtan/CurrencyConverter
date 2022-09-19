@@ -63,31 +63,6 @@ class LogicTest{
         AppLogic.selectUserOption("1", new Scanner("4\n")); // only output is to terminal
     }
 
-
-    @Test
-    public void testInitialChoices(){
-        // USER tests
-        // choose to convert currencies as a normal user
-        // AppLogic.selectUserOption("1", new Scanner("1")); // what should I check here?
-
-        // choose to display the currency table as a normal user
-        AppLogic.selectUserOption("1", new Scanner("2")); // only output is to terminal
-
-        // choose to display a summary of two currencies as a normal user
-        // AppLogic.selectUserOption("1", new Scanner("3")); // what should I check here?
-
-        // ADMIN tests
-        // choose to convert currencies as an admin
-        // AppLogic.selectUserOption("2", new Scanner("1")); // what should I check here?
-
-        // choose to display the currency table as a normal user
-        AppLogic.selectUserOption("2", new Scanner("2\n" + "n\n")); // admin pop currencies manipulation is already tested so only output is to terminal
-
-        // choose to display a summary of two currencies as a normal user
-        // AppLogic.selectUserOption("2", new Scanner("3")); // what should I check here?
-
-    }
-
     @Test
     public void testGetUserInput() throws Exception{
         assertNotNull(new UserInterface());
