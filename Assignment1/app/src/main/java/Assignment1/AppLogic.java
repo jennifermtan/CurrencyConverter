@@ -29,7 +29,7 @@ public class AppLogic{
 
             switch (input) {
                 case "1":
-                    convertCurrencies();
+                    convertCurrencies(scan);
                     break;
                 case "2":
                     AppLogic.displayCurrencyTable();
@@ -45,7 +45,7 @@ public class AppLogic{
 
             switch (input) {
                 case "1":
-                    convertCurrencies();
+                    convertCurrencies(scan);
                     break;
                 case "2":
                     UserInterface.adminDisplayTable(scan, popCurrencies, currencies);
@@ -85,7 +85,7 @@ public class AppLogic{
             System.out.println("File not found exception.");
         }
     }
-    public static void convertCurrencies() {
+    public static void convertCurrencies(Scanner scan) {
         System.out.println("Please input the amount.");
         double amount = Double.parseDouble(scan.nextLine());
         String currency1 = UserInterface.getString(getAllCurrencies(), "Please choose the current currency symbol.", scan);
