@@ -5,3 +5,4 @@
 ./src/main/java/Assignment1/currencies/JPY.csv
 ./src/main/java/Assignment1/currencies/ILS.csv
 ./src/main/java/Assignment1/currencies/GBP.csv
+./src/main/java/Assignment1/currencies/MVP.csv
