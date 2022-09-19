@@ -69,7 +69,7 @@ public class AppLogic{
                     System.exit(0);
             }
         }
-        selectUserOption(userType, scan);
+        // selectUserOption(userType, scan);
     }
 
     // Repeatable method, always run at beginning of program, which reads into the currency folder
