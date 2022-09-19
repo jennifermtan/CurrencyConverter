@@ -8,20 +8,20 @@ import java.lang.Exception;
 
 class LogicTest{
 
-    private final PrintStream standardOut = System.out;
-    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
-
-    // Redirects stdout stream to a new print stream to help check terminal output
-    @BeforeEach
-    public void setUp() {
-        System.setOut(new PrintStream(outputStreamCaptor));
-    }
-
-    // Resets the output stream after each test to prevent involvement with other code
-    @AfterEach
-    public void tearDown() {
-        System.setOut(standardOut);
-    }
+//    private final PrintStream standardOut = System.out;
+//    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+//
+//    // Redirects stdout stream to a new print stream to help check terminal output
+//    @BeforeEach
+//    public void setUp() {
+//        System.setOut(new PrintStream(outputStreamCaptor));
+//    }
+//
+//    // Resets the output stream after each test to prevent involvement with other code
+//    @AfterEach
+//    public void tearDown() {
+//        System.setOut(standardOut);
+//    }
 
 //    @Test
 //    public void currencyListCheck() throws Exception{
