@@ -58,8 +58,8 @@ class LogicTest{
 
     @Test
     public void selectUserOption() {
-        AppLogic.selectUserOption("1", new Scanner("2\n" + "4\n")); // only output is to terminal
-        AppLogic.selectUserOption("1", new Scanner("3\n" + "4\n")); // only output is to terminal
+        AppLogic.selectUserOption("1", new Scanner("2\n")); // only output is to terminal
+        AppLogic.selectUserOption("1", new Scanner("3\n" + "AUD\n" + "USD\n" + "03/08/22\n" + "10/08/22\n")); // only output is to terminal
         AppLogic.selectUserOption("1", new Scanner("4\n")); // only output is to terminal
     }
 
@@ -68,23 +68,23 @@ class LogicTest{
     public void testInitialChoices(){
         // USER tests
         // choose to convert currencies as a normal user
-        AppLogic.selectUserOption("1", new Scanner("1\n" + "100\n" + "AUD\n" + "USD\n" + "4\n")); // what should I check here?
+        AppLogic.selectUserOption("1", new Scanner("1\n" + "100\n" + "AUD\n" + "USD\n")); // what should I check here?
 
         // choose to display the currency table as a normal user
         AppLogic.selectUserOption("1", new Scanner("2\n" + "4\n")); // only output is to terminal
 
         // choose to display a summary of two currencies as a normal user
-        AppLogic.selectUserOption("1", new Scanner("3\n" + "USD\n" + "AUD\n" + "06/08/22\n" + "12/08/22\n" + "4\n")); // what should I check here?
+        AppLogic.selectUserOption("1", new Scanner("3\n" + "USD\n" + "AUD\n" + "06/08/22\n" + "12/08/22\n")); // what should I check here?
 
         // ADMIN tests
         // choose to convert currencies as an admin
-        AppLogic.selectUserOption("2", new Scanner("1\n" + "100\n" + "AUD\n" + "USD\n" + "6\n")); // what should I check here?
+        AppLogic.selectUserOption("2", new Scanner("1\n" + "100\n" + "AUD\n" + "USD\n")); // what should I check here?
 
         // choose to display the currency table as a normal user
         AppLogic.selectUserOption("2", new Scanner("2\n" + "n\n")); // admin pop currencies manipulation is already tested so only output is to terminal
 
         // choose to display a summary of two currencies as a normal user
-        AppLogic.selectUserOption("2", new Scanner("3\n" + "JPY\n" + "SGD\n" + "08/08/22\n" + "10/08/22\n" + "6\n")); // what should I check here?
+        AppLogic.selectUserOption("2", new Scanner("3\n" + "JPY\n" + "SGD\n" + "08/08/22\n" + "10/08/22\n")); // what should I check here?
 
     }
 }
